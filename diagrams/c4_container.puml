@@ -1,0 +1,18 @@
+@startuml
+
+!include <C4/C4_Container.puml>
+
+
+Person(user, "Пользователь")
+Container(web_app, "Веб-приложение", "React JS")
+Container(mobile_app, "Мобильное приложение", "?")
+Container(api, "Бекенд-приложение", "Python FastAPI")
+Container(db, "База данных осн.сущностей", "PostgreSQL")
+
+Rel(user, web_app, "uses")
+Rel(user, mobile_app, "uses")
+Rel(web_app, api, "sends request")
+Rel(mobile_app, api, "sends request")
+Rel(api, db, "SQL")
+
+@enduml

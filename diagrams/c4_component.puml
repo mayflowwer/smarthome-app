@@ -1,0 +1,19 @@
+@startuml
+
+!include <C4/C4_Context.puml>
+!include <C4/C4_Container.puml>
+!include <C4/C4_Component.puml>
+
+
+System_Boundary(web_app, "Web Application (SPA)"){
+    Component(shell_app, "Shell Application (Host)", "React JS")
+    Component(locations_mfe, "Locations MFE", "React JS")
+    Component(devices_mfe, "Devices MFE", "React JS")
+    Component(device_widgets_mfe, "Device Widgets Library (Shared)", "React JS")
+}
+
+Rel(shell_app, locations_mfe, "provides communication and routing")
+Rel(shell_app, devices_mfe, "provides communication and routing")
+Rel(shell_app, device_widgets_mfe, "provides communication and routing")
+
+@enduml

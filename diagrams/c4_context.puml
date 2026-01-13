@@ -1,0 +1,14 @@
+@startuml
+
+!include <C4/C4_Context.puml>
+!include <C4/C4_Container.puml>
+
+
+Person(user, "Пользователь")
+Container(smart_home_app, "Приложение умного дома")
+System_Ext(device, "Устройство умного дома")
+
+Rel(user, smart_home_app, "Uses")
+Rel(smart_home_app, device, "Commands to start task")
+
+@enduml
