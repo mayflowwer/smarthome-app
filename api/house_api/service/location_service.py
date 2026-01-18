@@ -1,28 +1,42 @@
-# service/location_service.py
+from validation_models.location_model import CreateLocation, UpdateLocation
+from db.engine import get_session
+from sqlmodel import select
+from db.db_models import Location
+import json
 
 async def get_all_locations():
-    """Получить все локации"""
-    # Вызов repository
-    pass
+    '''Get all locations'''
+    session = get_session()
+    query_stm = select(Location)
+    location_objs = session.exec(query_stm)
+    session.close()
+    return json.dumps(location_objs)
 
 async def get_location_by_id(location_id: int):
     """Получить локацию по ID"""
-    pass
+    session = get_session()
+    query_stm = select(Location).where(Location.id == location_id)
+    location_obj = session.exec(query_stm).first()
+    session.close()
+    return json.dumps(location_obj)
 
-async def get_locations_by_house_id(house_id: int):
-    """Получить все локации для дома"""
-    # SELECT * FROM locations WHERE house_id = ?
-    pass
+async def create_location(location: CreateLocation):
+    '''Create location in db'''
+    session = get_session()
+    session.add(location)
+    session.commit()
+    session.close()
 
-async def create_location(data):
-    """Создать локацию"""
-    # Проверить, существует ли дом с house_id
-    # Создать локацию
-    pass
-
-async def update_location(location_id: int, data):
+async def update_location(location_id: int, data: UpdateLocation):
     """Обновить локацию"""
-    pass
+    session = get_session()
+    query_stm = select(Location).where(Location.id == location_id)
+    location_obj = session.exec(query_stm).first()
+    data_from_json_str = json.load(data)
+    location_obj.name = data_from_json_str.name
+    session.add(location_obj)
+    session.commit()
+    session.close()
 
 async def delete_location(location_id: int):
     """Удалить локацию"""

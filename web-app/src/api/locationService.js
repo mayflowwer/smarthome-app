@@ -1,6 +1,6 @@
 const API_URL = 'https://api.example.com';
 
-export const apiService = {
+export const locationService = {
   get: async (endpoint) => {
     const response = await fetch(`${API_URL}${endpoint}`);
     if (!response.ok) throw new Error('API error');

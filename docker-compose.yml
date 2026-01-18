@@ -14,7 +14,9 @@ services:
       - smarthome_network
   house_api:
     container_name: house_api
-    build: ./api/house_api
+    build: 
+      context: ./api/house_api
+      dockerfile: Dockerfile
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -25,6 +27,15 @@ services:
       - ${HOUSE_API_APP_PORT}:8000
     depends_on:
       - db
+    networks:
+      - smarthome_network
+  web-app:
+    container_name: web-app
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    ports:
+      - ${WEB_APP_PORT}:${WEB_APP_PORT}
     networks:
       - smarthome_network
 
